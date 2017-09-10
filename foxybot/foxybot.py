@@ -3,7 +3,7 @@ import asyncio
 import discord
 import requests
 
-from config import config
+from config import Config as config
 
 
 async def _on_ready(shard, shard_id, num_shards):
