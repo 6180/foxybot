@@ -1,2 +1,2 @@
 # foxybot
-A modular, multi-purpose discord chatbot
+A modular, multi-purpose discord chatbot.
