@@ -42,5 +42,3 @@ class HelpManager(object):
         except OSError as ex:
             print("[ERROR] Cannot find `help.json`")
             print(ex)
-
-        print(HelpManager._help_dict)
