@@ -1,0 +1,8 @@
+{
+    "en": {
+        "help": {
+            "usage": "{prefix}help `command`",
+            "description": "Retrieves the help message for `command`"
+        }
+    }
+}
