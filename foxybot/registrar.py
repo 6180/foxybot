@@ -27,8 +27,8 @@ class CommandRegistrar():
 
     @property
     def loaded_commands(self):
-        return [command.name for command in set(self._command_table.values())]
+        return [command.name for command in set(self.command_table.values())]
 
     @property
     def loaded_aliases(self):
-        return list(command_table.keys())
+        return list(self.command_table.keys())

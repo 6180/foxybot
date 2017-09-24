@@ -4,7 +4,7 @@ import discord
 import requests
 
 import commands.test
-from config import config
+from config import conf
 from registrar import CommandRegistrar
 
 async def _on_ready(shards, shard, shard_id, num_shards):
@@ -20,7 +20,7 @@ async def _on_message(shards, client, msg):
     if msg.author.id == client.user.id or msg.author.bot:
         return
 
-    if msg.content.startswith(config['prefix']):
+    if msg.content.startswith(conf['prefix']):
         await CommandRegistrar.execute_command(Bot.shards, client, msg)
 
 
@@ -50,7 +50,7 @@ class Bot(object):
             await asyncio.sleep(delay)
             await shard.start(self.token)
 
-        self.token = token or config['token']
+        self.token = token or conf['token']
         
         tasks = []
         num_shards = requests.get('https://discordapp.com/api/v7/gateway/bot',
