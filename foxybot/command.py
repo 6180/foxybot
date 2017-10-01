@@ -1,9 +1,12 @@
 """Provide a template for making commands and a decorator to register them."""
 
 from abc import abstractmethod, abstractclassmethod, ABCMeta
-from enum import Enum
 
+import argparse
+
+from bot_help import HelpManager
 from registrar import CommandRegistrar
+
 
 def bot_command(cls):
     command = cls()
@@ -11,6 +14,32 @@ def bot_command(cls):
     if not issubclass(command.__class__, AbstractCommand):
         print(f'[ERROR] {command.__module__} is not a subclass of AbstractCommand and wont be loaded.')
         return
+
+    command._parser = argparse.ArgumentParser(add_help=False)
+    command._parser.add_argument(
+        '-h', '--help',
+        action='store_true',
+        dest='help',
+        default=False
+    )
+    command._parser.add_argument('args', nargs='*')
+
+    old_exec = command.execute
+
+    async def exec_hook(shards, client, msg):
+        try:
+            args, extra = command._parser.parse_known_args(msg.content.split()[1:])
+            args = vars(args)
+            if args['help']:
+                await client.send_message(msg.channel, 'Help has been invoked')
+                return
+        except SystemExit as ex:
+            await client.send_message(msg.channel, 'Something very very bad happened')
+            return
+    
+        await old_exec(shards, client, msg)
+
+    command.execute = exec_hook
 
     command_registrar = CommandRegistrar.instance()
 
