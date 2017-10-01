@@ -3,7 +3,7 @@ import asyncio
 import discord
 import requests
 
-import commands.test
+from commands import *
 from config import conf
 from registrar import CommandRegistrar
 
