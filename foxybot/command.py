@@ -4,16 +4,23 @@ from abc import abstractmethod, abstractclassmethod, ABCMeta
 
 import argparse
 
+from discord import Embed
+
 from bot_help import HelpManager
 from registrar import CommandRegistrar
+from config import conf
+
 
 
 def bot_command(cls):
     command = cls()
 
+
     if not issubclass(command.__class__, AbstractCommand):
         print(f'[ERROR] {command.__module__} is not a subclass of AbstractCommand and wont be loaded.')
         return
+
+    print(f'loading {command.aliases[0]}')
 
     command._parser = argparse.ArgumentParser(add_help=False)
     command._parser.add_argument(
@@ -31,7 +38,20 @@ def bot_command(cls):
             args, extra = command._parser.parse_known_args(msg.content.split()[1:])
             args = vars(args)
             if args['help']:
-                await client.send_message(msg.channel, 'Help has been invoked')
+                name = command.aliases[0]
+                entry = HelpManager.get_help(name)
+                usage = entry['usage'].replace('{prefix}', conf['prefix'])
+                description = entry['description']
+
+                embed = Embed()
+                embed.colour = 0x6699FF
+                embed.title = f"**{name}**"
+                embed.description = f"aliases: {', '.join(command.aliases)}"
+                embed.add_field(name=f"Usage:", value=usage, inline=False)
+                embed.add_field(name="Description:", value=description, inline=False)
+                embed.set_footer(text=f"Requested by {msg.author.name}#{msg.author.discriminator}", icon_url=msg.author.avatar_url)
+
+                await client.send_message(msg.channel, embed=embed)
                 return
         except SystemExit as ex:
             await client.send_message(msg.channel, 'Something very very bad happened')
