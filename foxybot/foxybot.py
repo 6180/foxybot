@@ -40,7 +40,7 @@ def _register_shard_events(_shard, _shard_id, _num_shards):
 
 class Bot(object):
 
-    shards = None # yuck, I know, too sleepy to fix properly atm
+    shards = None
 
     def __init__(self):
         self.startup_delay = 5
