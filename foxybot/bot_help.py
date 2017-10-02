@@ -10,7 +10,7 @@ class HelpManager(object):
     _last_modified = 0
 
     @staticmethod
-    def get_help(lang, key):
+    def get_help(key, lang='en'):
         """ Retrieve a given commands help text with given language.
         :param lang: ISO 639-1 language code specifying language to try to retrieve
         :param key: name of the command
