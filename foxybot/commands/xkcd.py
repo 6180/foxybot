@@ -12,14 +12,9 @@ class xkcd(AbstractCommand):
     _aliases = ['xkcd']
 
     async def execute(self, shards, client, msg):
-
-        print("test?")
-
         # TODO: allow specifying a numbered comic or search term to retrieve
         url = requests.get('http://c.xkcd.com/random/comic/').url
         comic = requests.get(f'{url}/info.0.json').json()
-
-        print(comic)
 
         embed = Embed()
         embed.colour = 0x6699FF
