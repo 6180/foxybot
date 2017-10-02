@@ -3,6 +3,10 @@
         "help": {
             "usage": "{prefix}help `command`",
             "description": "Retrieves the help message for `command`"
+        },
+        "xkcd": {
+            "usage": "{prefix}xkcd",
+            "description": "Post a random XKCD"
         }
     }
 }
