@@ -26,6 +26,10 @@ class CommandRegistrar():
 
 
     @property
+    def commands(self):
+        return self.command_table
+
+    @property
     def loaded_commands(self):
         return [command.name for command in set(self.command_table.values())]
 
