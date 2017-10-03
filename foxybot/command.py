@@ -11,11 +11,9 @@ from registrar import CommandRegistrar
 from config import conf
 
 
-
 def bot_command(cls):
     command = cls()
-
-
+    
     if not issubclass(command.__class__, AbstractCommand):
         print(f'[ERROR] {command.__module__} is not a subclass of AbstractCommand and wont be loaded.')
         return
@@ -42,14 +40,16 @@ def bot_command(cls):
                 entry = HelpManager.get_help(name)
                 usage = entry['usage'].replace('{prefix}', conf['prefix'])
                 description = entry['description']
-
+                
                 embed = Embed()
                 embed.colour = 0x6699FF
-                embed.title = f"**{name}**"
+                embed.title = f"**{name.capitalize()}**"
                 embed.description = f"aliases: {', '.join(command.aliases)}"
+                embed.set_thumbnail(url='https://i.imgur.com/MXkFjJj.png')
                 embed.add_field(name=f"Usage:", value=usage, inline=False)
                 embed.add_field(name="Description:", value=description, inline=False)
-                embed.set_footer(text=f"Requested by {msg.author.name}#{msg.author.discriminator}", icon_url=msg.author.avatar_url)
+                embed.set_footer(text=f"Requested by {msg.author.name}#{msg.author.discriminator}",
+                                 icon_url=msg.author.avatar_url)
 
                 await client.send_message(msg.channel, embed=embed)
                 return
@@ -60,7 +60,6 @@ def bot_command(cls):
         await old_exec(shards, client, msg)
 
     command.execute = exec_hook
-
     command_registrar = CommandRegistrar.instance()
 
     for alias in command.aliases:
