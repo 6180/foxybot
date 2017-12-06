@@ -2,7 +2,7 @@
 
 import utils
 from command import AbstractCommand, bot_command
-import discord
+from discord import embeds
 
 @bot_command
 class Avatar(AbstractCommand):
@@ -10,12 +10,7 @@ class Avatar(AbstractCommand):
 
     async def execute(self, shards, client, msg):
 
-        try:
-            args, extra = self._parser.parse_known_args(msg.content.split()[1:])
-        except SystemExit:
-            return
-
-        args = vars(args)['args']
+        args = await utils.get_args(self, msg)
 
         if len(args) == 0:
             target = msg.author
@@ -26,8 +21,14 @@ class Avatar(AbstractCommand):
             await msg.channel.send("Unable to find user...")
             return
 
-        await msg.channel.send(target)
-        await msg.channel.send(target.avatar_url)
+        embed = embeds.Embed()
+        embed.colour = target.colour
+        embed.set_author(name=f"{target.display_name}'s avatar", url=target.avatar_url)
+        embed.set_image(url=target.avatar_url)
+        embed.set_footer(text=f"Requested by {msg.author.display_name}#{msg.author.discriminator}",
+                         icon_url=msg.author.avatar_url)
+
+        await msg.channel.send(embed=embed)
 
     @property
     def name(self):
