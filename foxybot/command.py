@@ -1,9 +1,7 @@
 """Provide a template for making commands and a decorator to register them."""
 
 from abc import abstractmethod, abstractclassmethod, ABCMeta
-
 import argparse
-
 from discord import Embed
 
 from bot_help import HelpManager
@@ -13,7 +11,7 @@ from config import conf
 
 def bot_command(cls):
     command = cls()
-    
+
     if not issubclass(command.__class__, AbstractCommand):
         print(f'[ERROR] {command.__module__} is not a subclass of AbstractCommand and wont be loaded.')
         return
@@ -42,7 +40,7 @@ def bot_command(cls):
                 description = entry['description']
                 
                 embed = Embed()
-                embed.colour = 0x6699FF
+                embed.colour = msg.author.colour
                 embed.title = f"**{name.capitalize()}**"
                 embed.description = f"aliases: {', '.join(command.aliases)}"
                 embed.set_thumbnail(url='https://i.imgur.com/MXkFjJj.png')

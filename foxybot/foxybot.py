@@ -7,8 +7,9 @@ from commands import *
 from config import conf
 from registrar import CommandRegistrar
 
+
 async def _on_ready(shards, shard, shard_id, num_shards):
-        print(f'Shard {shard_id+1} connected with {len(shard.servers)} servers.')
+        print(f'Shard {shard_id+1} connected with {len(shard.guilds)} servers.')
         await shard.change_presence(game=discord.Game(name=f'Alive! | Shard {shard_id+1}/{num_shards}'))
 
 
