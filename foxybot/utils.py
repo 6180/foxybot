@@ -52,3 +52,12 @@ async def find_user_by_iname_discrim(name, discrim, guild):
         lambda m: m.discriminator == discrim and
                   (m.name.lower() == name or (m.nick is not None and m.nick.lower() == name)),
         guild.members)
+
+
+async def get_args(command, msg):
+    try:
+        args, extra = command._parser.parse_known_args(msg.content.split()[1:])
+    except SystemExit:
+        return
+
+    return vars(args)['args']
