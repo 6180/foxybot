@@ -49,10 +49,9 @@ def bot_command(cls):
                 embed.set_footer(text=f"Requested by {msg.author.name}#{msg.author.discriminator}",
                                  icon_url=msg.author.avatar_url)
 
-                await client.send_message(msg.channel, embed=embed)
+                await msg.channel.send(embed=embed)
                 return
         except SystemExit as ex:
-            await client.send_message(msg.channel, 'Something very very bad happened')
             return
     
         await old_exec(shards, client, msg)

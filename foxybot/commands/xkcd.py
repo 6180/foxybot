@@ -1,14 +1,13 @@
-"""Command to retrieve help for other commands and topics"""
+"""Command to retrieve random xkcd comic"""
 
 import requests
 
 from discord import Embed
 
 from command import AbstractCommand, bot_command
-from bot_help import HelpManager
 
 @bot_command
-class xkcd(AbstractCommand):
+class Xkcd(AbstractCommand):
     _aliases = ['xkcd']
 
     async def execute(self, shards, client, msg):
@@ -22,13 +21,7 @@ class xkcd(AbstractCommand):
         embed.set_image(url=comic['img'])
         embed.set_footer(text=comic['alt'])
 
-        await client.send_message(msg.channel, embed=embed)
-
-
-
-    @property
-    def name(self):
-        return self._name
+        await msg.channel.send(embed=embed)
 
     @property
     def aliases(self):
