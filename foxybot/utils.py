@@ -54,9 +54,9 @@ async def find_user_by_iname_discrim(name, discrim, guild):
         guild.members)
 
 
-async def get_args(command, msg):
+async def get_args(command, str_):
     try:
-        args, extra = command._parser.parse_known_args(msg.content.split()[1:])
+        args, extra = command._parser.parse_known_args(str_.split()[1:])
     except SystemExit:
         return
 

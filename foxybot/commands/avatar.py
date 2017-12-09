@@ -10,7 +10,7 @@ class Avatar(AbstractCommand):
 
     async def execute(self, shards, client, msg):
 
-        args = await utils.get_args(self, msg)
+        args = await utils.get_args(self, msg.content)
 
         if len(args) == 0:
             target = msg.author
