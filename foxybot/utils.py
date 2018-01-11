@@ -60,4 +60,4 @@ async def get_args(command, str_):
     except SystemExit:
         return
 
-    return vars(args)['args']
+    return vars(args)

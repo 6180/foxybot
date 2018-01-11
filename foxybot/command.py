@@ -31,24 +31,12 @@ def bot_command(cls):
 
     async def exec_hook(shards, client, msg):
         try:
+
             args, extra = command._parser.parse_known_args(msg.content.split()[1:])
             args = vars(args)
-            if args['help']:
-                name = command.aliases[0]
-                entry = HelpManager.get_help(name)
-                usage = entry['usage'].replace('{prefix}', conf['prefix'])
-                description = entry['description']
-                
-                embed = Embed()
-                embed.colour = msg.author.colour
-                embed.title = f"**{name.capitalize()}**"
-                embed.description = f"aliases: {', '.join(command.aliases)}"
-                embed.set_thumbnail(url='https://i.imgur.com/MXkFjJj.png')
-                embed.add_field(name=f"Usage:", value=usage, inline=False)
-                embed.add_field(name="Description:", value=description, inline=False)
-                embed.set_footer(text=f"Requested by {msg.author.name}#{msg.author.discriminator}",
-                                 icon_url=msg.author.avatar_url)
 
+            if args['help']:
+                embed = await HelpManager.get_help_embed(command, msg.content, msg.author)
                 await msg.channel.send(embed=embed)
                 return
         except SystemExit as ex:
