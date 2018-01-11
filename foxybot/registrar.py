@@ -17,9 +17,9 @@ class CommandRegistrar():
 
     @staticmethod
     async def execute_command(shards, shard, msg):
-        # !roll 100 -> 'roll'
         instance = CommandRegistrar.instance()
-        command = msg.content[1:].split(' ')[0].lower()
+        # !roll 100 -> 'roll'
+        command = msg.content[1:].split()[0].lower()
 
         if command in instance.command_table.keys():
             await instance.command_table[command].execute(shards, shard, msg)

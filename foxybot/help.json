@@ -1,12 +1,28 @@
 {
     "en": {
+        "avatar": {
+            "usage": "{prefix}avatar user",
+            "description": "Posts the avatar for the given `user`."
+        },
         "help": {
-            "usage": "{prefix}help `command`",
-            "description": "Retrieves the help message for `command`"
+            "usage": "{prefix}help command [language]",
+            "description": "Retrieves the help message for `command`.\nIf `language` is specified, tries to load help info for that language."
         },
         "xkcd": {
             "usage": "{prefix}xkcd",
             "description": "Post a random XKCD"
+        }
+    },
+    "es": {
+        "help": {
+            "usage": "{prefix}helpo `commando` [lang]",
+            "description": "Getto the helpo for `commando`"
+        }
+    },
+    "fr": {
+        "help": {
+            "usage": "{prefix}help commande [langage]",
+            "description": "Retourne le message d'aide pour `commande`.\nSi `langage` est passé, essaye de charger l'aide dans ce langage."
         }
     }
 }
